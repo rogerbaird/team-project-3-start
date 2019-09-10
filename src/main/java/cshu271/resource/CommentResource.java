@@ -9,7 +9,8 @@ import cshu271.datastore.NotFoundException;
 import cshu271.main.Authenticator;
 import cshu271.main.ErrorResponseBuilder;
 import cshu271.main.JsonResponseBuilder;
-import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,6 +24,8 @@ import javax.ws.rs.core.Response.Status;
 @Path("/comment")
 public class CommentResource
 {
+	private Logger logger = Logger.getLogger(CommentResource.class.getName());
+	
 	/**
 	 * Retrieve the comments for the given article Id
 	 *
@@ -34,9 +37,12 @@ public class CommentResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByArticleId(@PathParam("articleId") Long articleId)
 	{
-		Collection<Comment> comments = Comments.getCommentsByArticleId(articleId);
+		//// STUDENTS: Replace this code with your implementation:
 		
-		return JsonResponseBuilder.build(comments);
+		logger.log(Level.WARNING, "GET /comment/{articleId} not implemented");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+
+		////
 	}
 
 	/**
@@ -55,25 +61,12 @@ public class CommentResource
 		@FormParam("userToken") String userTokenStr,
 		@FormParam("comment") String commentStr)
 	{
-		try
-		{
-			UserToken userToken = Authenticator.checkUserToken(userTokenStr);
-			Long userId = userToken.getUserId();
-			
-			Articles.getById(articleId);
-			Comment comment = new Comment(0L, articleId, commentStr, userId);
-			Comments.add(comment);
-			
-			return JsonResponseBuilder.build(comment);			
-		}
-		catch (NotFoundException nfe)
-		{
-			return ErrorResponseBuilder.build(Status.NOT_FOUND);
-		}
-		catch (AccessDeniedException ade)
-		{
-			return ErrorResponseBuilder.build(Status.UNAUTHORIZED);
-		}
+		//// STUDENTS: Replace this code with your implementation:
+		
+		logger.log(Level.WARNING, "POST /comment/{articleId} not implemented");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		
+		////
 	}
 	
     /**
@@ -86,8 +79,12 @@ public class CommentResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCountByArticleId(@PathParam("articleId") Long articleId)
 	{
-		Long count = new Long(Comments.getCommentsByArticleId(articleId).size());
-		return JsonResponseBuilder.build(count);		
+		//// STUDENTS: Replace this code with your implementation:
+		
+		logger.log(Level.WARNING, "GET /comment/count/{articleId} not implemented");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+
+		////		
 	}
 
 }

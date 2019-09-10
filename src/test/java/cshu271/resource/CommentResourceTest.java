@@ -3,9 +3,9 @@ package cshu271.resource;
 import org.junit.After;
 import org.junit.Before;
 
-public class ArticleResourceTest
+public class CommentResourceTest
 {
-	public ArticleResourceTest()
+	public CommentResourceTest()
 	{
 	}
 
@@ -18,7 +18,6 @@ public class ArticleResourceTest
 	public void tearDown()
 	{
 	}
-
 
 	/// Test and support methods 
 }

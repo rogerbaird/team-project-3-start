@@ -1,16 +1,7 @@
 package cshu271.resource;
 
-import cshu271.datastore.Articles;
-import cshu271.datastore.NotFoundException;
-import cshu271.datastore.UnavailableException;
-import cshu271.datastore.Users;
-import cshu271.value.User;
-import cshu271.value.UserToken;
-import cshu271.main.ErrorResponseBuilder;
-import cshu271.main.JsonResponseBuilder;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,6 +15,8 @@ import javax.ws.rs.core.Response.Status;
 @Path("/user")
 public class UserResource
 {
+	private Logger logger = Logger.getLogger(UserResource.class.getName());
+
 	/**
 	 * Get the user by Id
 	 * @param userId 
@@ -35,14 +28,12 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long userId)
 	{
-		try
-		{
-			User user = Users.getUserById(userId);
-			return JsonResponseBuilder.build(user);			
-		} catch (NotFoundException notFE)
-		{
-			return ErrorResponseBuilder.build(Status.NOT_FOUND);
-		}
+		//// STUDENTS: Replace this code with your implementation:
+		
+		logger.log(Level.WARNING, "GET /user/{id} not implemented");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+
+		////
 	}
 
 	/**
@@ -55,12 +46,12 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getLikes(@PathParam("username") String username)
 	{
-		Collection<Long> likes = Articles.getAll().stream()
-			.filter(a -> a.getVote(username) == 1L)
-			.map(a -> a.getId())
-			.collect(Collectors.toList());
+		//// STUDENTS: Replace this code with your implementation:
 		
-		return JsonResponseBuilder.build(likes);		
+		logger.log(Level.WARNING, "GET /user/{username}/likes not implemented");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		
+		////		
 	}
 	
 	/**
@@ -73,12 +64,12 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDislikes(@PathParam("username") String username)
 	{
-		Collection<Long> dislikes = Articles.getAll().stream()
-			.filter(a -> a.getVote(username) == -1L)
-			.map(a -> a.getId())
-			.collect(Collectors.toList());
+		//// STUDENTS: Replace this code with your implementation:
 		
-		return JsonResponseBuilder.build(dislikes);
+		logger.log(Level.WARNING, "GET /user/{username}/dislikes not implemented");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		
+		////
 	
 	}
 
@@ -92,14 +83,12 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response checkUserExistence(@PathParam("username") String username)
 	{
-		try
-		{
-			User user = Users.getUserByName(username);
-			return JsonResponseBuilder.build(true);
-		} catch (NotFoundException notFE)
-		{
-			return JsonResponseBuilder.build(false);
-		}
+		//// STUDENTS: Replace this code with your implementation:
+		
+		logger.log(Level.WARNING, "GET /user/exists/{username} not implemented");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		
+		////
 	}
 	 
 	/**
@@ -118,24 +107,12 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(@FormParam("username") String username, @FormParam("password1") String password1, @FormParam("password2") String password2)
 	{
-		try
-		{
-			if (password1.equals(password2))
-			{
-				if (password1.length() <= 2)
-				{
-					return ErrorResponseBuilder.build(Status.BAD_REQUEST, "password too short");
-				}
-				User user = new User(username, password1);
-				user = Users.add(user);
-				
-				return JsonResponseBuilder.build(user);				
-			}
-			return ErrorResponseBuilder.build(Status.BAD_REQUEST, "password mismatch");			
-		} catch (UnavailableException ue)
-		{
-			return ErrorResponseBuilder.build(Status.FORBIDDEN, "The user name is unavailable");
-		}
+		//// STUDENTS: Replace this code with your implementation:
+		
+		logger.log(Level.WARNING, "POST /user/register");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		
+		////
 	}
 
 	/**
@@ -150,18 +127,12 @@ public class UserResource
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(@FormParam("username") String username, @FormParam("password") String password)
 	{
-		try
-		{
-			User user = Users.getUserByName(username);
-			if (user.getPassword().equals(password))
-			{
-				return JsonResponseBuilder.build(new UserToken(user));				
-			}
-			return ErrorResponseBuilder.build(Status.UNAUTHORIZED);
-		} catch (NotFoundException notFE)
-		{
-			return ErrorResponseBuilder.build(Status.UNAUTHORIZED);
-		}
+		//// STUDENTS: Replace this code with your implementation:
+		
+		logger.log(Level.WARNING, "POST /user/login");
+		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		
+		////
 	}
 
 }
